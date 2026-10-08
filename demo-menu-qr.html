@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f0e8">
+  <meta name="description" content="Prueba una demostración interactiva conceptual de menú QR desde el móvil.">
+  <title>Demostración de menú QR — The Grid GRX</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="menu-demo-body">
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <header class="site-header demo-header"><a class="wordmark" href="index.html" aria-label="The Grid GRX, inicio"><span class="wordmark-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="wordmark-name">THE GRID<span>GRX</span></span></a><a class="demo-exit" href="servicio-menu-qr.html">Salir de la demostración <span>↗</span></a></header>
+  <main id="contenido" class="menu-demo">
+    <div class="demo-warning"><span>PROTOTIPO VISUAL</span> Restaurante ficticio · No se envían pedidos reales</div>
+    <header class="menu-demo-heading"><span class="demo-mark">M</span><div><p class="eyebrow">GRANADA · MENÚ DE MUESTRA</p><h1>Mesa <em>Abierta</em></h1><p>Cocina de temporada, para compartir.</p></div><span class="menu-language">ES · DEMO</span></header>
+    <section class="demo-featured glass-card"><div><p class="eyebrow">COCINA HONESTA · PRODUCTO LOCAL</p><h2>Algo rico<br>está pasando.</h2><p>Una carta digital clara, cercana y fácil de explorar.</p></div><span class="demo-featured-art" aria-hidden="true">✳</span><span class="demo-badge">DEMO</span></section>
+    <div class="menu-search-wrap"><label class="menu-search"><span aria-hidden="true">⌕</span><input id="menu-search" type="search" placeholder="Buscar en el menú" aria-label="Buscar en el menú"><kbd>⌘ K</kbd></label><button class="filter-button" id="veg-filter" type="button" aria-pressed="false"><span>◉</span> Vegetariano</button></div>
+    <nav class="menu-categories" aria-label="Categorías del menú" role="tablist"><button type="button" role="tab" aria-selected="true" data-category="all">Todo</button><button type="button" role="tab" aria-selected="false" data-category="entrantes">Para compartir</button><button type="button" role="tab" aria-selected="false" data-category="principales">Platos principales</button><button type="button" role="tab" aria-selected="false" data-category="postres">Postres</button><button type="button" role="tab" aria-selected="false" data-category="bebidas">Bebidas</button></nav>
+    <section class="menu-demo-content"><div class="menu-section-heading"><div><p class="eyebrow" id="menu-category-label">LA CARTA COMPLETA</p><h2 id="menu-section-title">Para disfrutar</h2></div><span id="menu-item-count">4 propuestas</span></div><div class="menu-item-list" id="menu-item-list" aria-live="polite"></div><div class="demo-allergen-note"><span>i</span><p><strong>Alergias o intolerancias:</strong> esta carta es un prototipo. En un proyecto real, la información debe facilitarla y validarla el establecimiento antes de publicar.</p></div></section>
+    <a class="demo-service-link" href="servicio-menu-qr.html">¿Quieres una carta así para tu negocio? <span>Conoce el servicio ↗</span></a>
+  </main>
+  <div class="menu-cart-bar" id="menu-cart-bar" hidden><span class="cart-count" id="cart-count">0</span><span class="cart-bar-label"><b>Tu selección</b><small id="cart-summary">Aún no has añadido nada</small></span><button id="open-cart" type="button">Ver pedido <span id="cart-total">0,00 €</span></button></div>
+  <dialog class="cart-dialog glass-card" id="cart-dialog" aria-labelledby="cart-title"><form method="dialog"><button class="cart-close" aria-label="Cerrar pedido">×</button></form><p class="eyebrow">DEMO · NO SE TRAMITAN PEDIDOS</p><h2 id="cart-title">Tu pedido</h2><div id="cart-lines" class="cart-lines"></div><div class="cart-total-row"><span>Total de muestra</span><strong id="dialog-total">0,00 €</strong></div><button class="button button-dark cart-demo-confirm" id="demo-confirm" type="button">Probar confirmación de muestra <span>↗</span></button><p id="demo-confirmation" class="demo-confirmation" role="status" hidden>Esto es solo una demostración. No se ha enviado un pedido.</p></dialog>
+  <script src="script.js" defer></script>
+</body>
+</html>
