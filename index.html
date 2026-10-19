@@ -11,6 +11,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="The Grid GRX">
   <meta name="format-detection" content="telephone=no">
+  <meta name="color-scheme" content="light">
   <title>The Grid GRX — Diseño gráfico e identidad visual en Granada</title>
   <link rel="canonical" href="https://thegridgrx.example/">
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%20%20%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%2316201a%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M14%2014h16v16H14zM34%2014h16v16H34zM14%2034h16v16H14z%22%20fill%3D%22%23d4f06a%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M34%2034h16v16H34z%22%20fill%3D%22none%22%20stroke%3D%22%23d4f06a%22%20stroke-width%3D%223%22%2F%3E%0A%3C%2Fsvg%3E%0A" type="image/svg+xml">
@@ -19,8 +20,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
 /* =========================================================================
-   THE GRID GRX — hoja de estilo unificada (versión móvil optimizada v2)
-   Motion graphics + mobile advanced features
+   THE GRID GRX — hoja de estilo unificada v3
+   Motion graphics + mobile advanced features + kinetic typography
    ========================================================================= */
 :root {
   color-scheme: light;
@@ -60,6 +61,7 @@
   --shadow-glass: 0 18px 44px rgb(22 32 26 / 7%), inset 0 1px 0 rgb(255 255 255 / 70%);
   --ease: cubic-bezier(.22, .61, .36, 1);
   --ease-out: cubic-bezier(.16, .84, .44, 1);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
   --t-fast: .18s var(--ease);
   --t: .32s var(--ease);
   --t-slow: .6s var(--ease-out);
@@ -215,6 +217,7 @@ ul, ol { margin: 0; padding: 0; }
 }
 
 .button {
+  position: relative;
   display: inline-flex;
   min-height: 52px;
   align-items: center;
@@ -233,8 +236,20 @@ ul, ol { margin: 0; padding: 0; }
   transition: transform var(--t-fast), background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
   touch-action: manipulation;
   user-select: none;
+  overflow: hidden;
+  isolation: isolate;
 }
-.button span { transition: transform var(--t-fast); }
+.button::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgb(212 240 106 / 35%), transparent 60%);
+  content: "";
+  opacity: 0;
+  transition: opacity .35s var(--ease);
+}
+.button:hover::before { opacity: 1; }
+.button span { transition: transform var(--t-fast); position: relative; z-index: 1; }
 .button:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 .button:hover span { transform: translate(3px, -3px); }
 .button:active { transform: scale(.97); }
@@ -285,6 +300,12 @@ ul, ol { margin: 0; padding: 0; }
   0%, 100% { transform: translateX(0); }
   50% { transform: translateX(12px); }
 }
+@keyframes float-xy {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(6px, -8px); }
+  50% { transform: translate(-4px, 6px); }
+  75% { transform: translate(-8px, -4px); }
+}
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -332,22 +353,91 @@ ul, ol { margin: 0; padding: 0; }
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
-@keyframes magnetic-pull {
+@keyframes wave {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes aurora {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.08); }
+  66% { transform: translate(-30px, 20px) scale(.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes drift {
   0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(2px, -3px); }
-  50% { transform: translate(-2px, 2px); }
-  75% { transform: translate(3px, 1px); }
+  25% { transform: translate(20px, -15px); }
+  50% { transform: translate(-15px, 20px); }
+  75% { transform: translate(-20px, -10px); }
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: .8; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(3); opacity: 0; }
+}
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-r, 60px)) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--orbit-r, 60px)) rotate(-360deg); }
+}
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes shimmer-text {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes bar-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+}
+@keyframes rotate-3d {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+@keyframes stroke-flow {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -200; }
 }
 
 .motion-float { animation: float-y 6s var(--ease) infinite; }
 .motion-float-slow { animation: float-y 9s var(--ease) infinite; }
+.motion-float-xy { animation: float-xy 12s var(--ease) infinite; }
 .motion-spin { animation: spin-slow 26s linear infinite; transform-origin: center; }
 .motion-spin-reverse { animation: spin-reverse 32s linear infinite; transform-origin: center; }
 .motion-glow { animation: glow-pulse 4s var(--ease) infinite; }
 .motion-fade-scale { animation: fade-scale 1.2s var(--ease-out) both; }
 .motion-slide-up { animation: slide-up 1s var(--ease-out) both; }
+.motion-breathe { animation: breathe 5s var(--ease) infinite; }
+.motion-drift { animation: drift 18s var(--ease) infinite; }
 
-/* Gradiente animado para acentos */
+/* Kinetic typography */
+.kinetic-text {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.kinetic-text > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform .8s var(--ease-out);
+}
+.kinetic-text.is-visible > span { transform: translateY(0); }
+.kinetic-text > span:nth-child(2) { transition-delay: .06s; }
+.kinetic-text > span:nth-child(3) { transition-delay: .12s; }
+.kinetic-text > span:nth-child(4) { transition-delay: .18s; }
+.kinetic-text > span:nth-child(5) { transition-delay: .24s; }
+.kinetic-text > span:nth-child(6) { transition-delay: .30s; }
+.kinetic-text > span:nth-child(7) { transition-delay: .36s; }
+.kinetic-text > span:nth-child(8) { transition-delay: .42s; }
+
+/* Gradiente animado para texto */
 .accent-gradient {
   background: linear-gradient(120deg, var(--lime), var(--sage), var(--clay), var(--lime));
   background-size: 300% 300%;
@@ -365,19 +455,6 @@ ul, ol { margin: 0; padding: 0; }
 }
 .draw-line.is-drawn { stroke-dashoffset: 0; }
 
-/* Halo animado detrás de elementos */
-.halo::before {
-  position: absolute;
-  inset: -18%;
-  z-index: -1;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgb(212 240 106 / 32%), transparent 68%);
-  content: "";
-  filter: blur(32px);
-  animation: float-y 8s var(--ease) infinite;
-  pointer-events: none;
-}
-
 /* Blob orgánico animado */
 .blob {
   position: absolute;
@@ -388,7 +465,72 @@ ul, ol { margin: 0; padding: 0; }
   opacity: .55;
 }
 
-/* Texto con cursor parpadeante */
+/* Aurora background effect */
+.aurora-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.aurora-bg::before,
+.aurora-bg::after {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  max-width: 800px;
+  max-height: 800px;
+  border-radius: 50%;
+  content: "";
+  filter: blur(80px);
+  opacity: .35;
+}
+.aurora-bg::before {
+  top: -20%;
+  left: -10%;
+  background: radial-gradient(circle, var(--lime) 0%, transparent 65%);
+  animation: aurora 24s var(--ease) infinite;
+}
+.aurora-bg::after {
+  bottom: -20%;
+  right: -10%;
+  background: radial-gradient(circle, var(--clay) 0%, transparent 65%);
+  animation: aurora 30s var(--ease) infinite reverse;
+}
+
+/* Cinta animada (ribbon) */
+.ribbon {
+  position: absolute;
+  width: 200%;
+  height: 60px;
+  background: linear-gradient(90deg, transparent, var(--lime), var(--clay), transparent);
+  background-size: 200% 100%;
+  animation: wave 8s linear infinite;
+  opacity: .12;
+  pointer-events: none;
+}
+
+/* Anillo orbital */
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  animation: orbit 18s linear infinite;
+  pointer-events: none;
+}
+.orbit::before {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--clay);
+  content: "";
+  transform: translate(-50%, -50%);
+}
+
+/* Typewriter heading */
 .typewriter::after {
   display: inline-block;
   width: 2px;
@@ -400,8 +542,50 @@ ul, ol { margin: 0; padding: 0; }
   animation: blink-caret 1.05s steps(2) infinite;
 }
 
+/* Shimmer text */
+.shimmer-text {
+  background: linear-gradient(90deg, var(--ink) 0%, var(--clay) 40%, var(--ink) 60%, var(--ink) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer-text 5s linear infinite;
+}
+
+/* Dots loading animation */
+.dots span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 2px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: dot-bounce 1.4s var(--ease) infinite;
+}
+.dots span:nth-child(2) { animation-delay: .15s; }
+.dots span:nth-child(3) { animation-delay: .3s; }
+
+/* Progress bar animado */
+.progress-bar {
+  position: relative;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+.progress-bar::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--lime-deep), var(--clay));
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.6s var(--ease-out);
+}
+.progress-bar.is-visible::after { transform: scaleX(1); }
+
 /* =========================================================================
-   PARTICLE CANVAS (fondo del hero) — motion graphics
+   PARTICLE CANVAS (fondo del hero)
    ========================================================================= */
 #particle-canvas {
   position: absolute;
@@ -419,7 +603,7 @@ ul, ol { margin: 0; padding: 0; }
 [data-reveal] {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
+  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out), filter .9s var(--ease-out);
   will-change: opacity, transform;
 }
 [data-reveal].is-visible {
@@ -431,6 +615,7 @@ ul, ol { margin: 0; padding: 0; }
 [data-reveal="scale"] { transform: scale(.9); }
 [data-reveal="blur"] { filter: blur(10px); }
 [data-reveal="blur"].is-visible { filter: blur(0); }
+[data-reveal="rotate"] { transform: rotate(-6deg) scale(.94); }
 [data-reveal][data-delay="1"] { transition-delay: .1s; }
 [data-reveal][data-delay="2"] { transition-delay: .2s; }
 [data-reveal][data-delay="3"] { transition-delay: .3s; }
@@ -776,6 +961,8 @@ ul, ol { margin: 0; padding: 0; }
   color: var(--clay);
   content: "✳";
   font-style: normal;
+  animation: spin-slow 12s linear infinite;
+  display: inline-block;
 }
 
 /* =========================================================================
@@ -786,8 +973,12 @@ ul, ol { margin: 0; padding: 0; }
   border-bottom: 1px solid var(--line);
   background: var(--ink);
   color: var(--paper);
+  position: relative;
+  overflow: hidden;
 }
 .intro-band-inner {
+  position: relative;
+  z-index: 2;
   display: grid;
   min-height: 200px;
   grid-template-columns: 1fr auto;
@@ -968,8 +1159,11 @@ ul, ol { margin: 0; padding: 0; }
   overflow: hidden;
   background: var(--ink);
   color: var(--paper);
+  position: relative;
 }
 .work-feature-inner {
+  position: relative;
+  z-index: 2;
   display: grid;
   min-height: 600px;
   grid-template-columns: .82fr 1.18fr;
@@ -2273,9 +2467,7 @@ ul, ol { margin: 0; padding: 0; }
 .tilt-card { transform-style: preserve-3d; will-change: transform; }
 .tilt-card > * { transform: translateZ(0); }
 
-/* =========================================================================
-   CUSTOM CURSOR (solo desktop)
-   ========================================================================= */
+/* Custom cursor */
 .custom-cursor,
 .custom-cursor-outline {
   position: fixed;
@@ -2355,7 +2547,6 @@ ul, ol { margin: 0; padding: 0; }
   .proof-copy h2,
   .about-bottom h2 { font-size: 36px; line-height: 1.08; }
 
-  /* Header móvil */
   .site-header { min-height: 64px; top: 8px; margin-top: 8px; padding: 0 16px; border-radius: 12px; }
   .wordmark-name { font-size: 12px; }
   .wordmark-icon { width: 28px; height: 28px; }
@@ -2413,7 +2604,6 @@ ul, ol { margin: 0; padding: 0; }
   }
   .language-toggle { min-height: 46px; padding: 0 16px; font-size: 11px; }
 
-  /* Hero móvil */
   .hero { padding-top: 40px; padding-bottom: 56px; gap: 36px; }
   .hero h1 { font-size: clamp(44px, 14vw, 72px); margin: 20px 0 18px; line-height: .96; }
   .hero-intro { font-size: 15px; line-height: 1.7; margin-bottom: 26px; }
@@ -2423,7 +2613,6 @@ ul, ol { margin: 0; padding: 0; }
   .hero-note { margin-top: 28px; font-size: 9px; }
   #particle-canvas { opacity: .35; }
 
-  /* Secciones móvil */
   .service-grid { grid-template-columns: 1fr; gap: 14px; }
   .service-card { min-height: 0; padding: 20px 18px 24px; }
   .service-art { height: 130px; margin: 20px 0 18px; }
@@ -2450,7 +2639,6 @@ ul, ol { margin: 0; padding: 0; }
   .footer-column a,
   .footer-column > span:not(.footer-label) { font-size: 13px; padding: 5px 0; }
 
-  /* Páginas interiores móvil */
   .page-hero { padding-top: 48px; padding-bottom: 40px; }
   .page-hero h1,
   .project-detail-hero h1 { margin-top: 18px; font-size: clamp(44px, 13vw, 72px); }
@@ -2458,7 +2646,6 @@ ul, ol { margin: 0; padding: 0; }
   .page-index { margin-top: 32px; font-size: 9px; flex-wrap: wrap; gap: 8px; }
   .back-link { margin-bottom: 32px; font-size: 11px; padding: 10px 0; }
 
-  /* Servicios detalle móvil */
   .service-detail { grid-template-columns: 32px 1fr; gap: 16px; padding: 28px 0 32px; }
   .detail-no { grid-row: 1 / 4; padding-top: 4px; }
   .detail-title h2 { font-size: 32px; }
@@ -2476,14 +2663,12 @@ ul, ol { margin: 0; padding: 0; }
   .service-next .eyebrow { margin: 0 0 4px; }
   .service-next > a { min-height: 48px; padding: 8px 0; font-size: 15px; }
 
-  /* Proceso móvil */
   .process-section { padding: 56px 0; }
   .process-grid { grid-template-columns: 1fr; gap: 10px; }
   .process-grid article { min-height: 0; padding: 20px 16px; }
   .process-cta { align-items: flex-start; flex-direction: column; padding: 22px 20px; gap: 16px; }
   .process-cta .button { width: 100%; min-height: 52px; }
 
-  /* Proyectos móvil */
   .project-grid { gap: 40px; padding-bottom: 60px; }
   .project-art { height: min(82vw, 340px); padding: 22px 22px; }
   .project-art-large { height: min(100vw, 440px); min-height: 300px; }
@@ -2497,7 +2682,6 @@ ul, ol { margin: 0; padding: 0; }
   .project-story { gap: 24px; padding-bottom: 60px; }
   .project-facts { grid-template-columns: 1fr; gap: 12px; }
 
-  /* Sobre mí móvil */
   .about-graphic { min-height: min(96vw, 400px); }
   .about-monogram { font-size: clamp(180px, 52vw, 260px); }
   .about-copy h2 { font-size: clamp(36px, 10vw, 48px); }
@@ -2505,7 +2689,6 @@ ul, ol { margin: 0; padding: 0; }
   .about-bottom { align-items: flex-start; flex-direction: column; padding-top: 52px; padding-bottom: 56px; }
   .about-bottom .button { width: 100%; min-height: 52px; }
 
-  /* Contacto móvil */
   .contact-layout { padding-bottom: 80px; }
   .contact-option { min-height: 80px; padding: 14px 0; gap: 12px; }
   .contact-option strong { font-size: 15px; }
@@ -2518,7 +2701,6 @@ ul, ol { margin: 0; padding: 0; }
   .form-submit { min-height: 54px; }
   .contact-form .button-ghost { min-height: 52px; }
 
-  /* Menú QR móvil */
   .qr-service-hero { padding-bottom: 56px; gap: 30px; }
   .qr-service-visual { min-height: min(100vw, 420px); }
   .qr-phone { width: min(66%, 250px); min-height: 360px; padding: 26px 16px 18px; }
@@ -2531,30 +2713,24 @@ ul, ol { margin: 0; padding: 0; }
   .service-order-cta { align-items: flex-start; flex-direction: column; padding: 22px 20px; gap: 18px; }
   .service-order-cta .button { width: 100%; min-height: 54px; }
 
-  /* FAQ móvil */
   .faq-section { padding: 56px 0 64px; }
   .faq-item summary { padding: 18px 20px; font-size: 17px; }
   .faq-item p { padding: 0 20px 20px; font-size: 14px; }
 
-  /* Estadísticas móvil */
   .stats-grid { grid-template-columns: 1fr; gap: 20px; padding-top: 40px; padding-bottom: 40px; }
   .stat { padding-left: 16px; }
   .stat strong { font-size: 44px; }
 
-  /* Testimonios móvil */
   .testimonial-grid { grid-template-columns: 1fr; gap: 14px; }
 
-  /* Newsletter móvil */
   .newsletter-band { padding: 28px 20px; }
   .newsletter-form { flex-direction: column; gap: 10px; }
   .newsletter-form input, .newsletter-form button { min-height: 52px; width: 100%; }
 
-  /* Botones flotantes móvil */
   .whatsapp-float { right: 14px; bottom: 14px; width: 54px; height: 54px; }
   .whatsapp-float svg { width: 28px; height: 28px; }
   .back-to-top { right: 14px; bottom: 78px; width: 42px; height: 42px; }
 
-  /* Cursor custom deshabilitado en móvil */
   .custom-cursor,
   .custom-cursor-outline { display: none !important; }
 }
@@ -2600,7 +2776,6 @@ ul, ol { margin: 0; padding: 0; }
   .detail-visual { grid-column: 1; }
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
@@ -2613,28 +2788,34 @@ ul, ol { margin: 0; padding: 0; }
   .review-marquee-track,
   .motion-float,
   .motion-float-slow,
+  .motion-float-xy,
   .motion-spin,
   .motion-spin-reverse,
   .motion-glow,
+  .motion-breathe,
+  .motion-drift,
   .strip-star,
   .poster-circle,
   .cafe-sun,
   .luz-glow,
   .qr-glass-sticker,
-  .about-stamp { animation: none !important; }
+  .about-stamp,
+  .kinetic-text > span { animation: none !important; transform: none !important; }
+  .aurora-bg::before,
+  .aurora-bg::after { animation: none !important; }
 }
 
-/* Print */
 @media print {
   .site-header, .round-link, .hero-scroll, .whatsapp-float, .back-to-top,
-  .scroll-progress, #particle-canvas, .custom-cursor, .custom-cursor-outline { display: none !important; }
+  .scroll-progress, #particle-canvas, .custom-cursor, .custom-cursor-outline,
+  .aurora-bg, .motion-float, .motion-spin { display: none !important; }
   body { background: #fff; }
   [data-reveal] { opacity: 1; transform: none; filter: none; }
 }
 
-/* Touch accessibility */
 @media (hover: none) and (pointer: coarse) {
   .button:hover { transform: none; box-shadow: none; }
+  .button::before { display: none; }
   .button:active { transform: scale(.97); background: var(--ink-2); }
   .text-link:hover span { transform: none; }
   .round-link:hover { transform: none; background: transparent; color: inherit; }
@@ -2655,15 +2836,14 @@ ul, ol { margin: 0; padding: 0; }
   .process-grid article:hover::after { width: 24px; }
   .qr-benefit-grid article:hover { transform: none; background: rgb(255 255 255 / 40%); }
   .stat:hover { transform: none; }
+  .qr-service-visual:hover .qr-phone { transform: none; }
 }
 
-/* Ajustes finales de email */
 a[href^="mailto:"] {
   word-break: break-word;
   overflow-wrap: anywhere;
 }
 
-/* Evitar overflow horizontal en móvil */
 @media (max-width: 720px) {
   .shell { padding-inline: 0; }
   .hero-copy, .section-heading, .intro-band-inner { padding-inline: 0; }
@@ -2674,7 +2854,6 @@ a[href^="mailto:"] {
   input, select, textarea { font-size: 16px !important; }
 }
 
-/* Botones ancho completo cuando sea necesario */
 @media (max-width: 480px) {
   .hero-actions,
   .qr-service-copy > div[style*="flex"] { flex-direction: column !important; }
@@ -2715,6 +2894,7 @@ a[href^="mailto:"] {
     <section class="site-page" data-site-page="index">
 
       <section class="hero shell">
+        <div class="aurora-bg" aria-hidden="true"></div>
         <canvas id="particle-canvas" aria-hidden="true"></canvas>
         <div class="hero-copy">
           <p class="eyebrow"><span class="status-dot"></span> Diseño independiente · Granada, España</p>
@@ -2740,6 +2920,10 @@ a[href^="mailto:"] {
                 <linearGradient id="heroArc" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0" stop-color="#d4f06a"/>
                   <stop offset="1" stop-color="#a9c948"/>
+                </linearGradient>
+                <linearGradient id="heroOrbit" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#e07a52"/>
+                  <stop offset="1" stop-color="#7d6a8c"/>
                 </linearGradient>
               </defs>
 
@@ -2770,6 +2954,15 @@ a[href^="mailto:"] {
                 <path d="M468 406v92M422 452h92"/>
               </g>
               <path class="motion-float" d="M468 430l10 22 22 3-16 16 4 22-20-11-20 11 4-22-16-16 22-3z" fill="#e07a52"/>
+
+              <g class="motion-spin-reverse" style="transform-origin: 410px 210px;">
+                <circle cx="560" cy="210" r="6" fill="url(#heroOrbit)"/>
+                <circle cx="260" cy="210" r="6" fill="url(#heroOrbit)"/>
+              </g>
+
+              <g stroke="rgba(22,32,26,.32)" stroke-width="1" fill="none">
+                <path d="M60 540c40-30 80-30 120 0s80 30 120 0 80-30 120 0 80 30 120 0" class="draw-line"/>
+              </g>
             </svg>
 
             <span class="hero-badge glass">Estudio GRX · 001</span>
@@ -2803,6 +2996,7 @@ a[href^="mailto:"] {
       </div>
 
       <section class="intro-band">
+        <div class="aurora-bg" aria-hidden="true"></div>
         <div class="shell intro-band-inner">
           <p class="eyebrow">No es solo estética</p>
           <p>Una buena identidad no solo se ve bien.<br><strong>Hace que te recuerden.</strong></p>
@@ -2945,6 +3139,7 @@ a[href^="mailto:"] {
       </section>
 
       <section class="work-feature">
+        <div class="aurora-bg" aria-hidden="true"></div>
         <div class="shell work-feature-inner">
           <div class="work-feature-copy" data-reveal>
             <p class="eyebrow">Una mirada al portfolio</p>
@@ -3072,6 +3267,7 @@ a[href^="mailto:"] {
       </section>
 
       <section class="contact-strip">
+        <div class="aurora-bg" aria-hidden="true"></div>
         <div class="shell contact-strip-inner">
           <p class="eyebrow">¿Tienes algo entre manos?</p>
           <h2>Hagamos que<br><em>tome forma.</em></h2>
@@ -3953,7 +4149,7 @@ a[href^="mailto:"] {
     "use strict";
 
     /* =======================================================================
-       1. VIEWPORT HEIGHT FIX (móvil) — corrige 100vh en navegadores móviles
+       1. VIEWPORT HEIGHT FIX (móvil)
        ======================================================================= */
     const setVH = () => {
       document.documentElement.style.setProperty("--vh", window.innerHeight * 0.01 + "px");
@@ -3998,7 +4194,7 @@ a[href^="mailto:"] {
     });
 
     /* =======================================================================
-       4. HEADER — sombra, ocultar al hacer scroll down (mobile), mostrar al up
+       4. HEADER — sombra, ocultar al hacer scroll down (mobile)
        ======================================================================= */
     const header = document.querySelector("[data-header]");
     if (header instanceof HTMLElement) {
@@ -4030,7 +4226,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       5. REVEAL AVANZADO — IntersectionObserver con direcciones y blur
+       5. REVEAL AVANZADO
        ======================================================================= */
     const revealTargets = [...document.querySelectorAll("[data-reveal]")];
     if (revealTargets.length && "IntersectionObserver" in window) {
@@ -4048,14 +4244,47 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       6. PARALLAX SUAVE — elementos con data-parallax
+       6. KINETIC TEXT SPLIT — split heading words into spans
+       ======================================================================= */
+    document.querySelectorAll(".kinetic-split").forEach((el) => {
+      const text = el.textContent || "";
+      el.textContent = "";
+      const words = text.split(/(\s+)/);
+      words.forEach((word) => {
+        if (/^\s+$/.test(word)) {
+          el.appendChild(document.createTextNode(word));
+        } else {
+          const wrapper = document.createElement("span");
+          wrapper.className = "kinetic-text";
+          const inner = document.createElement("span");
+          inner.textContent = word;
+          wrapper.appendChild(inner);
+          el.appendChild(wrapper);
+        }
+      });
+    });
+    if ("IntersectionObserver" in window) {
+      const kineticObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            kineticObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      document.querySelectorAll(".kinetic-text").forEach((el) => kineticObserver.observe(el));
+    } else {
+      document.querySelectorAll(".kinetic-text").forEach((el) => el.classList.add("is-visible"));
+    }
+
+    /* =======================================================================
+       7. PARALLAX SUAVE
        ======================================================================= */
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
       const parallaxEls = [...document.querySelectorAll("[data-parallax]")];
       if (parallaxEls.length) {
         let rafId = null;
         const updateParallax = () => {
-          const scrollY = window.scrollY;
           parallaxEls.forEach((el) => {
             const speed = parseFloat(el.dataset.parallax) || 0.15;
             const rect = el.getBoundingClientRect();
@@ -4072,7 +4301,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       7. PARTICLE CANVAS — motion graphics de fondo en el hero
+       8. PARTICLE CANVAS
        ======================================================================= */
     (function initParticles() {
       const canvas = document.getElementById("particle-canvas");
@@ -4125,7 +4354,6 @@ a[href^="mailto:"] {
       function draw() {
         ctx.clearRect(0, 0, width, height);
 
-        // Líneas de conexión
         for (let i = 0; i < particles.length; i++) {
           const p = particles[i];
           for (let j = i + 1; j < particles.length; j++) {
@@ -4143,7 +4371,6 @@ a[href^="mailto:"] {
           }
         }
 
-        // Partículas
         particles.forEach((p) => {
           p.x += p.vx;
           p.y += p.vy;
@@ -4182,7 +4409,6 @@ a[href^="mailto:"] {
         resize();
       });
 
-      // Pausar cuando no está visible (ahorro de batería en móvil)
       if ("IntersectionObserver" in window) {
         const io = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
@@ -4200,7 +4426,7 @@ a[href^="mailto:"] {
     })();
 
     /* =======================================================================
-       8. SCROLL PROGRESS BAR
+       9. SCROLL PROGRESS BAR
        ======================================================================= */
     const scrollProgress = document.querySelector("#scroll-progress");
     if (scrollProgress instanceof HTMLElement) {
@@ -4222,7 +4448,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       9. BACK TO TOP
+       10. BACK TO TOP
        ======================================================================= */
     const backToTop = document.querySelector("#back-to-top");
     if (backToTop instanceof HTMLButtonElement) {
@@ -4237,7 +4463,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       10. CUSTOM CURSOR (solo desktop)
+       11. CUSTOM CURSOR (solo desktop)
        ======================================================================= */
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
       const cursor = document.createElement("div");
@@ -4284,7 +4510,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       11. TILT + SPOTLIGHT (solo desktop)
+       12. TILT + SPOTLIGHT (solo desktop)
        ======================================================================= */
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
       const tiltCards = document.querySelectorAll(".tilt-card");
@@ -4306,7 +4532,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       12. MAGNETIC BUTTONS (solo desktop) — efecto magnético en botones
+       13. MAGNETIC BUTTONS (solo desktop)
        ======================================================================= */
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
       document.querySelectorAll(".button, .round-link").forEach((btn) => {
@@ -4315,13 +4541,15 @@ a[href^="mailto:"] {
           const relX = e.clientX - rect.left - rect.width / 2;
           const relY = e.clientY - rect.top - rect.height / 2;
           btn.style.transform = `translate(${relX * 0.08}px, ${relY * 0.12}px)`;
+          btn.style.setProperty("--mx", (e.clientX - rect.left) + "px");
+          btn.style.setProperty("--my", (e.clientY - rect.top) + "px");
         });
         btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
       });
     }
 
     /* =======================================================================
-       13. DRAW LINES — animación de líneas SVG al entrar en vista
+       14. DRAW LINES
        ======================================================================= */
     if ("IntersectionObserver" in window) {
       const drawEls = document.querySelectorAll(".draw-line");
@@ -4339,7 +4567,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       14. FORMULARIO DE CONTACTO (prepara mensaje en WhatsApp)
+       15. FORMULARIO DE CONTACTO
        ======================================================================= */
     const form = document.querySelector("#contact-form");
     if (form instanceof HTMLFormElement) {
@@ -4392,7 +4620,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       15. NEWSLETTER FORM
+       16. NEWSLETTER FORM
        ======================================================================= */
     const newsletterForm = document.querySelector("#newsletter-form");
     if (newsletterForm instanceof HTMLFormElement) {
@@ -4411,7 +4639,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       16. ENRUTADO DE PÁGINAS (SPA hash routing)
+       17. ENRUTADO DE PÁGINAS
        ======================================================================= */
     const siteTitles = {
       "aviso-legal": "Aviso legal — The Grid GRX",
@@ -4456,7 +4684,6 @@ a[href^="mailto:"] {
       });
       if (!initial) window.scrollTo({ top: 0, behavior: "auto" });
 
-      // Re-trigger reveals de la nueva página
       setTimeout(() => {
         document.querySelectorAll("[data-reveal]:not(.is-visible)").forEach((el) => {
           const rect = el.getBoundingClientRect();
@@ -4484,7 +4711,7 @@ a[href^="mailto:"] {
     window.addEventListener("hashchange", () => updateSitePage());
 
     /* =======================================================================
-       17. HAPTIC FEEDBACK (Vibration API) — móvil profesional
+       18. HAPTIC FEEDBACK (Vibration API)
        ======================================================================= */
     if ("vibrate" in navigator) {
       document.querySelectorAll(".button, .menu-toggle, .back-to-top, .whatsapp-float, .contact-option, .round-link").forEach((el) => {
@@ -4495,7 +4722,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       18. SMOOTH TOUCH SCROLL FOR ANCHORS (mobile)
+       19. SMOOTH TOUCH SCROLL FOR ANCHORS
        ======================================================================= */
     document.querySelectorAll('a[href^="#"]').forEach((link) => {
       link.addEventListener("click", (e) => {
@@ -4504,7 +4731,6 @@ a[href^="mailto:"] {
         const targetId = href.split("?")[0].slice(1);
         const target = document.getElementById(targetId);
         if (!target) return;
-        // Dejar que el router maneje las páginas SPA
         if (siteTitles[targetId] && sitePages.length) return;
         e.preventDefault();
         target.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -4513,7 +4739,7 @@ a[href^="mailto:"] {
     });
 
     /* =======================================================================
-       19. PREFETCH LINKS ON HOVER (desktop, percepción de velocidad)
+       20. PREFETCH LINKS ON HOVER
        ======================================================================= */
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
       document.querySelectorAll('a[href^="#"]').forEach((link) => {
@@ -4531,7 +4757,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       20. LIVE CLOCK — muestra la hora de Granada en el footer (motion)
+       21. LIVE CLOCK — hora de Granada en el footer
        ======================================================================= */
     (function initClock() {
       const target = document.querySelector(".footer-brand > p");
@@ -4563,7 +4789,7 @@ a[href^="mailto:"] {
     })();
 
     /* =======================================================================
-       21. SCROLL-DRIVEN ELEMENT SCALE — efecto profesional en móvil y desktop
+       22. SCROLL-DRIVEN ELEMENT TRANSFORMS
        ======================================================================= */
     (function scrollDrivenTransforms() {
       const targets = [...document.querySelectorAll(".hero-art-panel, .poster-circle")];
@@ -4590,7 +4816,7 @@ a[href^="mailto:"] {
     })();
 
     /* =======================================================================
-       22. KEYBOARD ACCESSIBILITY — toggle menu with Escape
+       23. KEYBOARD ACCESSIBILITY — Escape cierra menú
        ======================================================================= */
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && navigation) {
@@ -4600,10 +4826,64 @@ a[href^="mailto:"] {
     });
 
     /* =======================================================================
-       23. FALLBACK para browsers sin IntersectionObserver
+       24. FALLBACK sin IntersectionObserver
        ======================================================================= */
     if (!("IntersectionObserver" in window)) {
       document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-visible"));
+    }
+
+    /* =======================================================================
+       25. AURORA MOUSE TRACKING (desktop) — sigue al cursor
+       ======================================================================= */
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      document.querySelectorAll(".aurora-bg").forEach((aurora) => {
+        aurora.style.transition = "transform 0.3s ease-out";
+        window.addEventListener("mousemove", (e) => {
+          const x = (e.clientX / window.innerWidth - 0.5) * 20;
+          const y = (e.clientY / window.innerHeight - 0.5) * 20;
+          aurora.style.transform = `translate(${x}px, ${y}px)`;
+        }, { passive: true });
+      });
+    }
+
+    /* =======================================================================
+       26. TYPING EFFECT for hero title (optional enhancer)
+       ======================================================================= */
+    (function typeHeroTitle() {
+      const h1 = document.querySelector(".hero h1 em");
+      if (!h1) return;
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) return;
+      const text = h1.textContent || "";
+      h1.textContent = "";
+      h1.classList.add("typewriter");
+      let i = 0;
+      const type = () => {
+        if (i <= text.length) {
+          h1.textContent = text.slice(0, i);
+          i++;
+          setTimeout(type, 90);
+        }
+      };
+      setTimeout(type, 600);
+    })();
+
+    /* =======================================================================
+       27. PROGRESS BARS ANIMATION
+       ======================================================================= */
+    if ("IntersectionObserver" in window) {
+      const bars = document.querySelectorAll(".progress-bar");
+      if (bars.length) {
+        const barObs = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              barObs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.3 });
+        bars.forEach((b) => barObs.observe(b));
+      }
     }
   </script>
 </body>
