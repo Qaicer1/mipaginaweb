@@ -12,6 +12,7 @@
   <meta name="apple-mobile-web-app-title" content="The Grid GRX">
   <meta name="format-detection" content="telephone=no">
   <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f5f2ea">
   <title>The Grid GRX — Diseño gráfico e identidad visual en Granada</title>
   <link rel="canonical" href="https://thegridgrx.example/">
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%20%20%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%2316201a%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M14%2014h16v16H14zM34%2014h16v16H34zM14%2034h16v16H14z%22%20fill%3D%22%23d4f06a%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M34%2034h16v16H34z%22%20fill%3D%22none%22%20stroke%3D%22%23d4f06a%22%20stroke-width%3D%223%22%2F%3E%0A%3C%2Fsvg%3E%0A" type="image/svg+xml">
@@ -20,8 +21,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
 /* =========================================================================
-   THE GRID GRX — hoja de estilo unificada v3
-   Motion graphics + mobile advanced features + kinetic typography
+   THE GRID GRX — hoja de estilo unificada v4
+   Motion graphics + mobile advanced + laptop polish + enhanced buttons
    ========================================================================= */
 :root {
   color-scheme: light;
@@ -95,7 +96,10 @@ body {
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: none;
+  cursor: auto;
 }
+
+body.cursor-hidden { cursor: none; }
 
 body::after {
   position: fixed;
@@ -216,6 +220,9 @@ ul, ol { margin: 0; padding: 0; }
   backdrop-filter: blur(18px) saturate(150%);
 }
 
+/* =========================================================================
+   BUTTONS — enhanced with liquid hover, ripple, magnetic, focus glow
+   ========================================================================= */
 .button {
   position: relative;
   display: inline-flex;
@@ -238,29 +245,61 @@ ul, ol { margin: 0; padding: 0; }
   user-select: none;
   overflow: hidden;
   isolation: isolate;
+  -webkit-font-smoothing: antialiased;
 }
 .button::before {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgb(212 240 106 / 35%), transparent 60%);
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgb(212 240 106 / 40%), transparent 62%);
   content: "";
   opacity: 0;
   transition: opacity .35s var(--ease);
 }
+.button::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(120deg, transparent, rgb(255 255 255 / 18%), transparent);
+  background-size: 220% 100%;
+  content: "";
+  opacity: 0;
+  transition: opacity .35s var(--ease);
+  pointer-events: none;
+}
 .button:hover::before { opacity: 1; }
+.button:hover::after { opacity: 1; animation: shimmer 1.6s linear infinite; }
 .button span { transition: transform var(--t-fast); position: relative; z-index: 1; }
 .button:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
 .button:hover span { transform: translate(3px, -3px); }
 .button:active { transform: scale(.97); }
+.button:focus-visible { outline: 3px solid #7ba03f; outline-offset: 4px; }
+.button:disabled, .button[aria-disabled="true"] { opacity: .5; cursor: not-allowed; transform: none; }
+
 .button-dark { background: var(--ink); color: var(--paper); }
 .button-dark:hover { background: var(--ink-2); }
 .button-light { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.button-light:hover { background: var(--lime); border-color: var(--lime); }
 .button-lime { background: var(--lime); color: var(--ink); border-color: var(--lime); }
 .button-lime:hover { background: var(--lime-deep); border-color: var(--lime-deep); }
 .button-ghost { background: transparent; color: var(--ink); }
 .button-ghost:hover { background: var(--ink); color: var(--paper); }
+.button-clay { background: var(--clay); color: var(--paper); border-color: var(--clay); }
+.button-clay:hover { background: #c96b47; border-color: #c96b47; }
 
+/* Ripple effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgb(212 240 106 / 42%);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Text link */
 .text-link {
   display: inline-flex;
   align-items: center;
@@ -272,10 +311,13 @@ ul, ol { margin: 0; padding: 0; }
   text-decoration-thickness: 1px;
   text-underline-offset: 5px;
   touch-action: manipulation;
+  transition: color var(--t-fast);
 }
 .text-link span { transition: transform var(--t-fast); }
+.text-link:hover { color: var(--clay); }
 .text-link:hover span { transform: translateX(4px); }
 
+/* Round link */
 .round-link {
   display: grid;
   width: 46px;
@@ -284,10 +326,38 @@ ul, ol { margin: 0; padding: 0; }
   border: 1px solid var(--ink);
   border-radius: 50%;
   font-size: 18px;
-  transition: transform var(--t), background var(--t), color var(--t);
+  transition: transform var(--t), background var(--t), color var(--t), box-shadow var(--t);
   touch-action: manipulation;
 }
-.round-link:hover { transform: rotate(45deg); background: var(--ink); color: var(--lime); }
+.round-link:hover {
+  transform: rotate(45deg);
+  background: var(--ink);
+  color: var(--lime);
+  box-shadow: 0 8px 20px rgb(22 32 26 / 18%);
+}
+.round-link:active { transform: rotate(45deg) scale(.92); }
+
+/* Icon button */
+.icon-button {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 60%);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast), transform var(--t-fast), border-color var(--t-fast);
+  touch-action: manipulation;
+}
+.icon-button:hover {
+  background: var(--ink);
+  color: var(--lime);
+  border-color: var(--ink);
+  transform: translateY(-2px);
+}
+.icon-button:active { transform: scale(.94); }
 
 /* =========================================================================
    MOTION GRAPHICS — sistema de animación global
@@ -405,6 +475,14 @@ ul, ol { margin: 0; padding: 0; }
   0% { stroke-dashoffset: 0; }
   100% { stroke-dashoffset: -200; }
 }
+@keyframes hover-lift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+@keyframes hover-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 240, 106, 0); }
+  50% { box-shadow: 0 0 0 8px rgba(212, 240, 106, 0.18); }
+}
 
 .motion-float { animation: float-y 6s var(--ease) infinite; }
 .motion-float-slow { animation: float-y 9s var(--ease) infinite; }
@@ -417,7 +495,6 @@ ul, ol { margin: 0; padding: 0; }
 .motion-breathe { animation: breathe 5s var(--ease) infinite; }
 .motion-drift { animation: drift 18s var(--ease) infinite; }
 
-/* Kinetic typography */
 .kinetic-text {
   display: inline-block;
   overflow: hidden;
@@ -437,7 +514,6 @@ ul, ol { margin: 0; padding: 0; }
 .kinetic-text > span:nth-child(7) { transition-delay: .36s; }
 .kinetic-text > span:nth-child(8) { transition-delay: .42s; }
 
-/* Gradiente animado para texto */
 .accent-gradient {
   background: linear-gradient(120deg, var(--lime), var(--sage), var(--clay), var(--lime));
   background-size: 300% 300%;
@@ -447,7 +523,6 @@ ul, ol { margin: 0; padding: 0; }
   color: transparent;
 }
 
-/* Línea que se dibuja al entrar en vista */
 .draw-line {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
@@ -455,7 +530,6 @@ ul, ol { margin: 0; padding: 0; }
 }
 .draw-line.is-drawn { stroke-dashoffset: 0; }
 
-/* Blob orgánico animado */
 .blob {
   position: absolute;
   background: linear-gradient(140deg, rgb(224 122 82 / 42%), rgb(212 240 106 / 32%));
@@ -465,7 +539,6 @@ ul, ol { margin: 0; padding: 0; }
   opacity: .55;
 }
 
-/* Aurora background effect */
 .aurora-bg {
   position: absolute;
   inset: 0;
@@ -498,7 +571,6 @@ ul, ol { margin: 0; padding: 0; }
   animation: aurora 30s var(--ease) infinite reverse;
 }
 
-/* Cinta animada (ribbon) */
 .ribbon {
   position: absolute;
   width: 200%;
@@ -510,7 +582,6 @@ ul, ol { margin: 0; padding: 0; }
   pointer-events: none;
 }
 
-/* Anillo orbital */
 .orbit {
   position: absolute;
   top: 50%;
@@ -530,7 +601,6 @@ ul, ol { margin: 0; padding: 0; }
   transform: translate(-50%, -50%);
 }
 
-/* Typewriter heading */
 .typewriter::after {
   display: inline-block;
   width: 2px;
@@ -542,7 +612,6 @@ ul, ol { margin: 0; padding: 0; }
   animation: blink-caret 1.05s steps(2) infinite;
 }
 
-/* Shimmer text */
 .shimmer-text {
   background: linear-gradient(90deg, var(--ink) 0%, var(--clay) 40%, var(--ink) 60%, var(--ink) 100%);
   background-size: 200% 100%;
@@ -552,7 +621,6 @@ ul, ol { margin: 0; padding: 0; }
   animation: shimmer-text 5s linear infinite;
 }
 
-/* Dots loading animation */
 .dots span {
   display: inline-block;
   width: 6px;
@@ -565,7 +633,6 @@ ul, ol { margin: 0; padding: 0; }
 .dots span:nth-child(2) { animation-delay: .15s; }
 .dots span:nth-child(3) { animation-delay: .3s; }
 
-/* Progress bar animado */
 .progress-bar {
   position: relative;
   height: 4px;
@@ -585,7 +652,7 @@ ul, ol { margin: 0; padding: 0; }
 .progress-bar.is-visible::after { transform: scaleX(1); }
 
 /* =========================================================================
-   PARTICLE CANVAS (fondo del hero)
+   PARTICLE CANVAS
    ========================================================================= */
 #particle-canvas {
   position: absolute;
@@ -623,7 +690,6 @@ ul, ol { margin: 0; padding: 0; }
 [data-reveal][data-delay="5"] { transition-delay: .5s; }
 [data-reveal][data-delay="6"] { transition-delay: .6s; }
 
-/* Parallax suave */
 [data-parallax] {
   will-change: transform;
   transition: transform .1s linear;
@@ -680,6 +746,9 @@ ul, ol { margin: 0; padding: 0; }
 .wordmark:hover .wordmark-icon i:nth-child(1) { transform: scale(.7); }
 .wordmark:hover .wordmark-icon i:nth-child(2) { transform: scale(1.15); }
 .wordmark:hover .wordmark-icon i:nth-child(3) { transform: scale(1.15); }
+.wordmark:active .wordmark-icon i:nth-child(1) { transform: scale(.6); }
+.wordmark:active .wordmark-icon i:nth-child(2) { transform: scale(.9); }
+.wordmark:active .wordmark-icon i:nth-child(3) { transform: scale(.9); }
 .wordmark-name {
   display: flex;
   flex-direction: column;
@@ -715,6 +784,7 @@ ul, ol { margin: 0; padding: 0; }
   font-weight: 600;
   letter-spacing: -.01em;
   touch-action: manipulation;
+  transition: color var(--t-fast);
 }
 .primary-nav > a::after {
   position: absolute;
@@ -726,6 +796,7 @@ ul, ol { margin: 0; padding: 0; }
   content: "";
   transition: width var(--t);
 }
+.primary-nav > a:hover { color: var(--ink); }
 .primary-nav > a:hover::after,
 .primary-nav > a[aria-current="page"]::after { width: 100%; }
 .primary-nav .nav-contact {
@@ -737,10 +808,15 @@ ul, ol { margin: 0; padding: 0; }
   border-radius: var(--radius-pill);
   background: var(--ink);
   color: var(--paper);
-  transition: background var(--t-fast), transform var(--t-fast);
+  transition: background var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
 }
 .primary-nav .nav-contact::after { display: none; }
-.primary-nav .nav-contact:hover { background: var(--ink-2); transform: translateY(-2px); }
+.primary-nav .nav-contact:hover {
+  background: var(--ink-2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgb(22 32 26 / 16%);
+}
+.primary-nav .nav-contact:active { transform: scale(.96); }
 .primary-nav .nav-contact span { transition: transform var(--t-fast); }
 .primary-nav .nav-contact:hover span { transform: translate(2px, -2px); }
 .language-toggle {
@@ -753,10 +829,11 @@ ul, ol { margin: 0; padding: 0; }
   font-size: 10px;
   letter-spacing: .08em;
   cursor: pointer;
-  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast), transform var(--t-fast);
   touch-action: manipulation;
 }
 .language-toggle:hover { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.language-toggle:active { transform: scale(.94); }
 
 .skip-link {
   position: fixed;
@@ -1046,6 +1123,7 @@ ul, ol { margin: 0; padding: 0; }
   box-shadow: var(--shadow);
 }
 .service-card:active { transform: scale(.98); }
+.service-card:focus-visible { outline: 3px solid #7ba03f; outline-offset: 4px; }
 .card-number { color: var(--muted); font-size: 9px; position: relative; z-index: 1; }
 .service-art {
   position: relative;
@@ -1736,7 +1814,7 @@ ul, ol { margin: 0; padding: 0; }
    PROJECT DETAIL
    ========================================================================= */
 .project-detail-hero { padding-top: 46px; padding-bottom: 44px; }
-.back-link { display: inline-block; margin-bottom: 52px; color: var(--muted-2); font-size: 11px; padding: 8px 0; touch-action: manipulation; }
+.back-link { display: inline-block; margin-bottom: 52px; color: var(--muted-2); font-size: 11px; padding: 8px 0; touch-action: manipulation; transition: color var(--t-fast); }
 .back-link:hover { color: var(--ink); }
 .concept-warning {
   display: inline-flex;
@@ -2360,6 +2438,7 @@ ul, ol { margin: 0; padding: 0; }
   touch-action: manipulation;
 }
 .newsletter-form button:hover { background: var(--lime-deep); transform: translateY(-2px); }
+.newsletter-form button:active { transform: scale(.96); }
 
 /* =========================================================================
    TRUST STRIP
@@ -2418,6 +2497,7 @@ ul, ol { margin: 0; padding: 0; }
   touch-action: manipulation;
 }
 .whatsapp-float:hover { transform: translateY(-4px) scale(1.06); box-shadow: 0 16px 40px rgb(37 211 102 / 48%); }
+.whatsapp-float:active { transform: scale(.94); }
 .whatsapp-float svg { width: 30px; height: 30px; }
 .whatsapp-float::after {
   position: absolute;
@@ -2462,12 +2542,11 @@ ul, ol { margin: 0; padding: 0; }
 }
 .back-to-top.is-visible { opacity: 1; transform: none; pointer-events: auto; }
 .back-to-top:hover { background: var(--ink); color: var(--lime); }
+.back-to-top:active { transform: scale(.92); }
 
-/* Tilt card */
 .tilt-card { transform-style: preserve-3d; will-change: transform; }
 .tilt-card > * { transform: translateZ(0); }
 
-/* Custom cursor */
 .custom-cursor,
 .custom-cursor-outline {
   position: fixed;
@@ -2498,11 +2577,17 @@ ul, ol { margin: 0; padding: 0; }
 .custom-cursor-outline.is-hovering { width: 52px; height: 52px; border-color: var(--clay); }
 
 /* =========================================================================
-   RESPONSIVE
+   RESPONSIVE — mobile first + laptop polish
    ========================================================================= */
 @media (min-width: 1500px) {
   .hero { min-height: 720px; }
   .hero-art { min-height: 580px; }
+  .service-grid { gap: 22px; }
+  .project-grid { gap: 64px 40px; }
+}
+@media (min-width: 1920px) {
+  :root { --max: 1480px; }
+  body { font-size: 17px; }
 }
 @media (max-width: 1080px) {
   :root { --gutter: clamp(20px, 5vw, 56px); }
@@ -2733,6 +2818,7 @@ ul, ol { margin: 0; padding: 0; }
 
   .custom-cursor,
   .custom-cursor-outline { display: none !important; }
+  body.cursor-hidden { cursor: auto; }
 }
 
 @media (max-width: 480px) {
@@ -2803,6 +2889,7 @@ ul, ol { margin: 0; padding: 0; }
   .kinetic-text > span { animation: none !important; transform: none !important; }
   .aurora-bg::before,
   .aurora-bg::after { animation: none !important; }
+  .typewriter::after { display: none !important; }
 }
 
 @media print {
@@ -2816,10 +2903,11 @@ ul, ol { margin: 0; padding: 0; }
 @media (hover: none) and (pointer: coarse) {
   .button:hover { transform: none; box-shadow: none; }
   .button::before { display: none; }
+  .button::after { display: none; }
   .button:active { transform: scale(.97); background: var(--ink-2); }
   .text-link:hover span { transform: none; }
   .round-link:hover { transform: none; background: transparent; color: inherit; }
-  .round-link:active { background: var(--ink); color: var(--lime); }
+  .round-link:active { background: var(--ink); color: var(--lime); transform: scale(.92); }
   .service-card:hover { transform: none; box-shadow: var(--shadow-glass); }
   .service-card:active { transform: scale(.98); }
   .service-card::before { display: none; }
@@ -2861,6 +2949,15 @@ a[href^="mailto:"] {
   .service-order-cta .button,
   .process-cta .button,
   .contact-strip .button { width: 100%; }
+}
+
+/* Laptop-specific polish (1024px to 1366px) */
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .hero { min-height: 620px; }
+  .service-card { min-height: 380px; }
+  .hero h1 { font-size: clamp(56px, 7vw, 92px); }
+  .work-feature-inner { min-height: 540px; }
+  .process-grid article { min-height: 220px; }
 }
   </style>
 </head>
@@ -4244,7 +4341,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       6. KINETIC TEXT SPLIT — split heading words into spans
+       6. KINETIC TEXT SPLIT
        ======================================================================= */
     document.querySelectorAll(".kinetic-split").forEach((el) => {
       const text = el.textContent || "";
@@ -4472,6 +4569,7 @@ a[href^="mailto:"] {
       cursorOutline.className = "custom-cursor-outline";
       document.body.appendChild(cursor);
       document.body.appendChild(cursorOutline);
+      document.body.classList.add("cursor-hidden");
       let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0;
       let rafId = null;
       document.addEventListener("mousemove", (event) => {
@@ -4507,6 +4605,17 @@ a[href^="mailto:"] {
         cursor.classList.remove("is-active");
         cursorOutline.classList.remove("is-active");
       });
+      // Restore normal cursor when leaving window or on window blur
+      window.addEventListener("blur", () => {
+        document.body.classList.remove("cursor-hidden");
+        cursor.classList.remove("is-active");
+        cursorOutline.classList.remove("is-active");
+      });
+      window.addEventListener("focus", () => {
+        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+          document.body.classList.add("cursor-hidden");
+        }
+      });
     }
 
     /* =======================================================================
@@ -4535,7 +4644,7 @@ a[href^="mailto:"] {
        13. MAGNETIC BUTTONS (solo desktop)
        ======================================================================= */
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-      document.querySelectorAll(".button, .round-link").forEach((btn) => {
+      document.querySelectorAll(".button, .round-link, .icon-button").forEach((btn) => {
         btn.addEventListener("mousemove", (e) => {
           const rect = btn.getBoundingClientRect();
           const relX = e.clientX - rect.left - rect.width / 2;
@@ -4549,7 +4658,28 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       14. DRAW LINES
+       14. RIPPLE EFFECT en botones (mobile + desktop)
+       ======================================================================= */
+    function attachRipple(el) {
+      el.addEventListener("pointerdown", (e) => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const rect = el.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        const ripple = document.createElement("span");
+        ripple.className = "ripple";
+        ripple.style.width = ripple.style.height = size + "px";
+        ripple.style.left = x + "px";
+        ripple.style.top = y + "px";
+        el.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 650);
+      });
+    }
+    document.querySelectorAll(".button, .round-link, .icon-button, .nav-contact, .language-toggle, .form-submit").forEach(attachRipple);
+
+    /* =======================================================================
+       15. DRAW LINES
        ======================================================================= */
     if ("IntersectionObserver" in window) {
       const drawEls = document.querySelectorAll(".draw-line");
@@ -4567,7 +4697,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       15. FORMULARIO DE CONTACTO
+       16. FORMULARIO DE CONTACTO
        ======================================================================= */
     const form = document.querySelector("#contact-form");
     if (form instanceof HTMLFormElement) {
@@ -4620,7 +4750,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       16. NEWSLETTER FORM
+       17. NEWSLETTER FORM
        ======================================================================= */
     const newsletterForm = document.querySelector("#newsletter-form");
     if (newsletterForm instanceof HTMLFormElement) {
@@ -4639,7 +4769,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       17. ENRUTADO DE PÁGINAS
+       18. ENRUTADO DE PÁGINAS
        ======================================================================= */
     const siteTitles = {
       "aviso-legal": "Aviso legal — The Grid GRX",
@@ -4711,10 +4841,10 @@ a[href^="mailto:"] {
     window.addEventListener("hashchange", () => updateSitePage());
 
     /* =======================================================================
-       18. HAPTIC FEEDBACK (Vibration API)
+       19. HAPTIC FEEDBACK
        ======================================================================= */
     if ("vibrate" in navigator) {
-      document.querySelectorAll(".button, .menu-toggle, .back-to-top, .whatsapp-float, .contact-option, .round-link").forEach((el) => {
+      document.querySelectorAll(".button, .menu-toggle, .back-to-top, .whatsapp-float, .contact-option, .round-link, .icon-button").forEach((el) => {
         el.addEventListener("touchstart", () => {
           try { navigator.vibrate(8); } catch (e) {}
         }, { passive: true });
@@ -4722,7 +4852,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       19. SMOOTH TOUCH SCROLL FOR ANCHORS
+       20. SMOOTH TOUCH SCROLL FOR ANCHORS
        ======================================================================= */
     document.querySelectorAll('a[href^="#"]').forEach((link) => {
       link.addEventListener("click", (e) => {
@@ -4739,7 +4869,7 @@ a[href^="mailto:"] {
     });
 
     /* =======================================================================
-       20. PREFETCH LINKS ON HOVER
+       21. PREFETCH LINKS ON HOVER
        ======================================================================= */
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
       document.querySelectorAll('a[href^="#"]').forEach((link) => {
@@ -4757,7 +4887,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       21. LIVE CLOCK — hora de Granada en el footer
+       22. LIVE CLOCK
        ======================================================================= */
     (function initClock() {
       const target = document.querySelector(".footer-brand > p");
@@ -4789,7 +4919,7 @@ a[href^="mailto:"] {
     })();
 
     /* =======================================================================
-       22. SCROLL-DRIVEN ELEMENT TRANSFORMS
+       23. SCROLL-DRIVEN TRANSFORMS
        ======================================================================= */
     (function scrollDrivenTransforms() {
       const targets = [...document.querySelectorAll(".hero-art-panel, .poster-circle")];
@@ -4816,7 +4946,7 @@ a[href^="mailto:"] {
     })();
 
     /* =======================================================================
-       23. KEYBOARD ACCESSIBILITY — Escape cierra menú
+       24. KEYBOARD ACCESSIBILITY
        ======================================================================= */
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && navigation) {
@@ -4826,14 +4956,14 @@ a[href^="mailto:"] {
     });
 
     /* =======================================================================
-       24. FALLBACK sin IntersectionObserver
+       25. FALLBACK sin IntersectionObserver
        ======================================================================= */
     if (!("IntersectionObserver" in window)) {
       document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-visible"));
     }
 
     /* =======================================================================
-       25. AURORA MOUSE TRACKING (desktop) — sigue al cursor
+       26. AURORA MOUSE TRACKING (desktop)
        ======================================================================= */
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
       document.querySelectorAll(".aurora-bg").forEach((aurora) => {
@@ -4847,7 +4977,7 @@ a[href^="mailto:"] {
     }
 
     /* =======================================================================
-       26. TYPING EFFECT for hero title (optional enhancer)
+       27. TYPING EFFECT for hero title
        ======================================================================= */
     (function typeHeroTitle() {
       const h1 = document.querySelector(".hero h1 em");
@@ -4869,7 +4999,7 @@ a[href^="mailto:"] {
     })();
 
     /* =======================================================================
-       27. PROGRESS BARS ANIMATION
+       28. PROGRESS BARS ANIMATION
        ======================================================================= */
     if ("IntersectionObserver" in window) {
       const bars = document.querySelectorAll(".progress-bar");
@@ -4885,6 +5015,190 @@ a[href^="mailto:"] {
         bars.forEach((b) => barObs.observe(b));
       }
     }
+
+    /* =======================================================================
+       29. LAZY LOADING images (native)
+       ======================================================================= */
+    document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
+      if ("loading" in HTMLImageElement.prototype) {
+        // Native support, no action needed
+      } else {
+        // Fallback for old browsers
+        img.setAttribute("loading", "eager");
+      }
+    });
+
+    /* =======================================================================
+       30. ACTIVE NAV LINK update on scroll (laptops + desktop)
+       ======================================================================= */
+    (function updateActiveNav() {
+      const sections = [...document.querySelectorAll("section[id]")];
+      if (!sections.length) return;
+      const navLinks = [...document.querySelectorAll(".primary-nav a")];
+      if (!navLinks.length) return;
+      const onScroll = () => {
+        const scrollY = window.scrollY + 120;
+        sections.forEach((section) => {
+          const top = section.offsetTop;
+          const bottom = top + section.offsetHeight;
+          if (scrollY >= top && scrollY < bottom) {
+            navLinks.forEach((link) => {
+              const href = link.getAttribute("href");
+              if (href === "#" + section.id) link.setAttribute("aria-current", "page");
+              else link.removeAttribute("aria-current");
+            });
+          }
+        });
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    })();
+
+    /* =======================================================================
+       31. PRELOAD FONTS fallback
+       ======================================================================= */
+    if ("fonts" in document) {
+      document.fonts.ready.then(() => {
+        document.body.classList.add("fonts-loaded");
+      });
+    } else {
+      document.body.classList.add("fonts-loaded");
+    }
+
+    /* =======================================================================
+       32. TOUCH SWIPE detection for project pagination
+       ======================================================================= */
+    (function touchSwipePagination() {
+      const pagination = document.querySelector(".project-pagination");
+      if (!pagination) return;
+      const links = pagination.querySelectorAll("a");
+      if (links.length !== 2) return;
+      let touchStartX = 0;
+      let touchStartY = 0;
+      pagination.addEventListener("touchstart", (e) => {
+        if (!e.touches || !e.touches[0]) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+      pagination.addEventListener("touchend", (e) => {
+        if (!e.changedTouches || !e.changedTouches[0]) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(dx) > 60 && Math.abs(dy) < 60) {
+          if (dx > 0) links[0].click();
+          else links[1].click();
+        }
+      }, { passive: true });
+    })();
+
+    /* =======================================================================
+       33. HEADER TAP TARGET — increase menu touch area
+       ======================================================================= */
+    (function enhanceMenuTouch() {
+      if (!menuButton) return;
+      menuButton.style.touchAction = "manipulation";
+    })();
+
+    /* =======================================================================
+       34. ORIENTATION CHANGE — reset scroll position smoothly
+       ======================================================================= */
+    window.addEventListener("orientationchange", () => {
+      setTimeout(() => {
+        if (navigation) navigation.classList.remove("is-open");
+        if (menuButton) menuButton.setAttribute("aria-expanded", "false");
+      }, 300);
+    });
+
+    /* =======================================================================
+       35. POINTER TYPE DETECTION — remove custom cursor on hybrid devices
+       ======================================================================= */
+    (function hybridCursorFix() {
+      const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+      const handle = () => {
+        if (!mq.matches) {
+          document.body.classList.remove("cursor-hidden");
+          const cursors = document.querySelectorAll(".custom-cursor, .custom-cursor-outline");
+          cursors.forEach((c) => c.classList.remove("is-active"));
+        }
+      };
+      if (mq.addEventListener) mq.addEventListener("change", handle);
+      else if (mq.addListener) mq.addListener(handle);
+    })();
+
+    /* =======================================================================
+       36. PERFORMANCE — throttle resize heavy work
+       ======================================================================= */
+    (function throttleResize() {
+      let resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          document.documentElement.classList.add("resized");
+          setTimeout(() => document.documentElement.classList.remove("resized"), 200);
+        }, 150);
+      }, { passive: true });
+    })();
+
+    /* =======================================================================
+       37. ENHANCED FAQ — close others when one opens (optional UX)
+       ======================================================================= */
+    (function faqAccordion() {
+      const faqItems = document.querySelectorAll(".faq-item");
+      if (faqItems.length < 2) return;
+      faqItems.forEach((item) => {
+        item.addEventListener("toggle", () => {
+          if (item.open) {
+            faqItems.forEach((other) => {
+              if (other !== item && other.open) other.open = false;
+            });
+          }
+        });
+      });
+    })();
+
+    /* =======================================================================
+       38. INTERSECTION OBSERVER — lazy animation for special SVGs
+       ======================================================================= */
+    (function svgAnimationsOnView() {
+      if (!("IntersectionObserver" in window)) return;
+      const svgs = document.querySelectorAll(".service-detail-visual svg, .project-art svg");
+      if (!svgs.length) return;
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("svg-active");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      svgs.forEach((svg) => obs.observe(svg));
+    })();
+
+    /* =======================================================================
+       39. BUTTON PRESS FEEDBACK — add active state class
+       ======================================================================= */
+    (function buttonPressFeedback() {
+      const pressTargets = document.querySelectorAll(".button, .icon-button, .round-link, .menu-toggle, .back-to-top");
+      pressTargets.forEach((el) => {
+        el.addEventListener("pointerdown", () => el.classList.add("is-pressed"));
+        el.addEventListener("pointerup", () => el.classList.remove("is-pressed"));
+        el.addEventListener("pointercancel", () => el.classList.remove("is-pressed"));
+        el.addEventListener("pointerleave", () => el.classList.remove("is-pressed"));
+      });
+    })();
+
+    /* =======================================================================
+       40. SYSTEM PREFERENCE — detect and respect
+       ======================================================================= */
+    (function systemPreferenceDetect() {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+      document.documentElement.classList.toggle("prefers-dark", prefersDark.matches);
+      document.documentElement.classList.toggle("prefers-reduced-motion", prefersReduced.matches);
+      if (prefersReduced.matches) {
+        document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-visible"));
+      }
+    })();
   </script>
 </body>
 </html>
