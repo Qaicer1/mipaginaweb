@@ -935,6 +935,33 @@ ul, ol { margin: 0; padding: 0; }
   box-shadow: var(--shadow);
 }
 .hero-art-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.halloween-details {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.halloween-bat {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: halloween-bob 8s ease-in-out infinite;
+}
+.halloween-bat-delayed { animation-delay: -3.5s; }
+.halloween-pumpkin {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: halloween-glow 5s ease-in-out infinite;
+}
+@keyframes halloween-bob {
+  0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+  50% { transform: translate(8px, -9px) rotate(2deg); }
+}
+@keyframes halloween-glow {
+  0%, 100% { filter: drop-shadow(0 0 3px rgb(224 122 82 / 12%)); }
+  50% { filter: drop-shadow(0 0 9px rgb(224 122 82 / 42%)); }
+}
 .hero-badge {
   position: absolute;
   top: 22px;
@@ -3059,6 +3086,24 @@ a[href^="mailto:"] {
 
               <g stroke="rgba(22,32,26,.32)" stroke-width="1" fill="none">
                 <path d="M60 540c40-30 80-30 120 0s80 30 120 0 80-30 120 0 80 30 120 0" class="draw-line"/>
+              </g>
+            </svg>
+
+            <svg class="halloween-details" viewBox="0 0 600 600" aria-hidden="true">
+              <g transform="translate(250 45)" fill="#263027" opacity=".78">
+                <g class="halloween-bat">
+                  <path d="M0 9c-7-10-15-11-23-12 4 7 4 13 2 19-5-8-12-11-20-12 6 10 7 18 5 25 9-2 16-7 21-15 2 8 7 13 15 16 8-3 13-8 15-16 5 8 12 13 21 15-2-7-1-15 5-25-8 1-15 4-20 12-2-6-2-12 2-19C15-2 7-1 0 9Z"/>
+                </g>
+              </g>
+              <g transform="translate(525 115) scale(.68)" fill="#263027" opacity=".62">
+                <g class="halloween-bat halloween-bat-delayed">
+                  <path d="M0 9c-7-10-15-11-23-12 4 7 4 13 2 19-5-8-12-11-20-12 6 10 7 18 5 25 9-2 16-7 21-15 2 8 7 13 15 16 8-3 13-8 15-16 5 8 12 13 21 15-2-7-1-15 5-25-8 1-15 4-20 12-2-6-2-12 2-19C15-2 7-1 0 9Z"/>
+                </g>
+              </g>
+              <g class="halloween-pumpkin" transform="translate(516 370)" stroke="#7f432d" stroke-width="2.5" stroke-linejoin="round">
+                <path d="M0 5c0-7 5-12 12-12 4 0 7 2 9 5 5-5 12-6 18-3 9-5 20-2 24 7 10 15 4 39-10 46-7 4-16 4-23 0-8 4-17 4-24 0C-9 39-10 18 0 5Z" fill="#e07a52"/>
+                <path d="M31-6c0-8 4-13 12-15-1 7 1 11 6 13" fill="none" stroke="#536c3a" stroke-width="5" stroke-linecap="round"/>
+                <path d="m14 19 8 9 3-12zm35 0-10-3 3 12zm-27 20q9 10 18 0l-2 7H24z" fill="#49332a" stroke="#49332a" stroke-width="2" stroke-linejoin="round"/>
               </g>
             </svg>
 
