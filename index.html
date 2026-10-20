@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#f5f2ea">
+  <meta name="theme-color" content="#120e14">
   <meta name="description" content="The Grid GRX — Billy, diseñador gráfico en Granada. Identidad visual, diseño para redes, gráfica impresa y menús QR para restaurantes.">
   <meta name="author" content="Billy — The Grid GRX">
   <meta name="robots" content="index, follow">
@@ -11,8 +11,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="The Grid GRX">
   <meta name="format-detection" content="telephone=no">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#f5f2ea">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#120e14">
   <title>The Grid GRX — Diseño gráfico e identidad visual en Granada</title>
   <link rel="canonical" href="https://thegridgrx.example/">
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%20%20%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%2316201a%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M14%2014h16v16H14zM34%2014h16v16H34zM14%2034h16v16H14z%22%20fill%3D%22%23d4f06a%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M34%2034h16v16H34z%22%20fill%3D%22none%22%20stroke%3D%22%23d4f06a%22%20stroke-width%3D%223%22%2F%3E%0A%3C%2Fsvg%3E%0A" type="image/svg+xml">
@@ -2986,9 +2986,211 @@ a[href^="mailto:"] {
   .work-feature-inner { min-height: 540px; }
   .process-grid article { min-height: 220px; }
 }
+
+/* =========================================================================
+   HALLOWEEN NIGHT THEME
+   ========================================================================= */
+body.halloween-theme {
+  color-scheme: dark;
+  --paper: #120e14;
+  --paper-2: #1a141c;
+  --paper-3: #261c28;
+  --surface: #211a23;
+  --surface-soft: rgb(35 27 39 / 78%);
+  --ink: #f4e9dd;
+  --ink-2: #e5d5ca;
+  --ink-3: #382839;
+  --muted: #b8a9b0;
+  --muted-2: #92828f;
+  --line: rgb(236 216 225 / 13%);
+  --line-strong: rgb(236 216 225 / 25%);
+  --line-light: rgb(236 216 225 / 16%);
+  --lime: #ff9b50;
+  --lime-deep: #dc6a34;
+  --lime-soft: #f5bd7c;
+  --clay: #ff8754;
+  --clay-soft: #d58c78;
+  --sage: #92729c;
+  --sand: #6d4d5a;
+  --plum: #8b6a91;
+  --shadow-sm: 0 4px 18px rgb(0 0 0 / 22%);
+  --shadow: 0 20px 55px rgb(0 0 0 / 36%);
+  --shadow-lg: 0 34px 90px rgb(0 0 0 / 48%);
+  --shadow-glass: 0 20px 50px rgb(0 0 0 / 28%), inset 0 1px 0 rgb(255 255 255 / 5%);
+  background:
+    radial-gradient(900px 620px at 82% 4%, rgb(105 47 102 / 20%), transparent 65%),
+    radial-gradient(820px 600px at 8% 24%, rgb(193 77 40 / 12%), transparent 68%),
+    radial-gradient(ellipse at 50% 70%, rgb(36 23 39 / 44%), transparent 72%),
+    var(--paper);
+}
+
+body.halloween-theme .site-header {
+  border-color: rgb(236 216 225 / 15%);
+  background: rgb(27 21 31 / 84%);
+  box-shadow: 0 12px 34px rgb(0 0 0 / 30%);
+}
+body.halloween-theme .site-header.is-scrolled { background: rgb(22 17 26 / 96%); }
+body.halloween-theme .primary-nav .nav-contact,
+body.halloween-theme .button-dark {
+  border-color: #e8773e;
+  background: #e8773e;
+  color: #1b1013;
+}
+body.halloween-theme .primary-nav .nav-contact:hover,
+body.halloween-theme .button-dark:hover { background: #ff9b50; }
+body.halloween-theme .language-toggle,
+body.halloween-theme .icon-button,
+body.halloween-theme .back-to-top {
+  border-color: var(--line-strong);
+  background: rgb(255 255 255 / 5%);
+  color: var(--ink);
+}
+body.halloween-theme .language-toggle:hover,
+body.halloween-theme .icon-button:hover,
+body.halloween-theme .back-to-top:hover {
+  background: var(--lime);
+  color: #21131b;
+}
+body.halloween-theme .primary-nav > a { color: var(--ink-2); }
+body.halloween-theme .primary-nav > a::after { background: var(--lime); }
+body.halloween-theme .menu-toggle { border-color: var(--line-strong); }
+body.halloween-theme .menu-toggle span { background: var(--ink); }
+body.halloween-theme .primary-nav.is-open { background: var(--paper); }
+
+body.halloween-theme .hero::after {
+  position: absolute;
+  z-index: -1;
+  inset: -12% -8%;
+  background:
+    radial-gradient(ellipse at 70% 47%, rgb(110 46 107 / 22%), transparent 42%),
+    radial-gradient(ellipse at 28% 78%, rgb(213 82 39 / 13%), transparent 40%);
+  content: "";
+  pointer-events: none;
+  animation: halloween-mist 18s ease-in-out infinite alternate;
+}
+body.halloween-theme .hero-art-panel {
+  background: linear-gradient(145deg, #201624, #382238 56%, #19151e);
+  box-shadow: inset 0 0 100px rgb(0 0 0 / 38%), 0 25px 75px rgb(0 0 0 / 40%);
+}
+body.halloween-theme .hero-art-svg #heroSun stop:first-child { stop-color: #58334b; }
+body.halloween-theme .hero-art-svg #heroSun stop:last-child { stop-color: #8d503f; }
+body.halloween-theme .hero-art-svg #heroArc stop:first-child { stop-color: #ff9b50; }
+body.halloween-theme .hero-art-svg #heroArc stop:last-child { stop-color: #b75036; }
+body.halloween-theme .hero-art-svg > g:first-of-type { stroke: rgb(255 235 217 / 15%); }
+body.halloween-theme .hero-art-svg rect[fill="#d4f06a"],
+body.halloween-theme .hero-art-svg circle[fill="#d4f06a"] { fill: #ffad55; }
+body.halloween-theme .hero-art-svg rect[stroke="#d4f06a"],
+body.halloween-theme .hero-art-svg circle[stroke="#d4f06a"],
+body.halloween-theme .service-art svg [stroke="#d4f06a"] { stroke: #ffad55; }
+body.halloween-theme .service-art svg [fill="#d4f06a"] { fill: #ffad55; }
+body.halloween-theme .hero-art-svg circle[stroke^="rgba(22,32,26"],
+body.halloween-theme .hero-art-svg g[stroke^="rgba(22,32,26"] {
+  stroke: rgb(247 223 211 / 38%);
+}
+body.halloween-theme .hero-art-svg text[fill="#16201a"] { fill: #f3d8c7; }
+body.halloween-theme .hero-art-svg g[fill="#16201a"] rect { fill: #de7849; }
+body.halloween-theme .hero-art-svg rect[fill="#16201a"] { fill: #2b1d2e; }
+body.halloween-theme .hero-art-svg g[fill="#16201a"] rect[fill="#d4f06a"] { fill: #ffb15e; }
+body.halloween-theme .hero-art-svg .motion-float[fill="#e07a52"] { fill: #ffad55; }
+body.halloween-theme .halloween-bat { fill: #f3d8c7; }
+body.halloween-theme .halloween-pumpkin path:first-child { fill: #f18a43; }
+body.halloween-theme .halloween-pumpkin path:last-child { fill: #311d25; stroke: #311d25; }
+body.halloween-theme .hero-badge.glass {
+  border-color: rgb(255 255 255 / 14%);
+  background: rgb(22 16 27 / 72%);
+  color: #f5e7dc;
+}
+body.halloween-theme .hero-art .art-index,
+body.halloween-theme .hero-art .art-side,
+body.halloween-theme .hero-art .art-bottom { color: #e5d3cf; }
+body.halloween-theme .hero-art .art-side { text-shadow: 0 1px 8px #21131b; }
+body.halloween-theme #particle-canvas { opacity: .72; }
+@keyframes halloween-mist {
+  from { transform: translate3d(-2%, 0, 0) scale(.96); opacity: .65; }
+  to { transform: translate3d(2%, -1%, 0) scale(1.04); opacity: 1; }
+}
+
+body.halloween-theme .service-card,
+body.halloween-theme .glass-card,
+body.halloween-theme .testimonial-card,
+body.halloween-theme .contact-form,
+body.halloween-theme .service-order-cta,
+body.halloween-theme .qr-price-card,
+body.halloween-theme .qr-benefit-grid article,
+body.halloween-theme .review-chip {
+  border-color: var(--line);
+  background: rgb(33 25 37 / 78%);
+  color: var(--ink);
+  box-shadow: var(--shadow-glass);
+}
+body.halloween-theme .service-card:hover,
+body.halloween-theme .testimonial-card:hover { border-color: rgb(255 155 80 / 55%); background: #2b2030; }
+body.halloween-theme .service-card::before {
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgb(231 119 62 / 22%), transparent 68%);
+}
+body.halloween-theme .service-card-identidad { --art-a: #50334a; --art-b: #a1543d; }
+body.halloween-theme .service-card-digital { --art-a: #5b3448; --art-b: #9c513c; }
+body.halloween-theme .service-card-impreso { --art-a: #383247; --art-b: #845247; }
+body.halloween-theme .service-card-qr { --art-a: #201821; --art-b: #443047; }
+body.halloween-theme .service-card-qr h3 { color: var(--ink); }
+body.halloween-theme .service-card-qr:hover { background: #342338; }
+body.halloween-theme .glass-card__review {
+  background: rgb(255 255 255 / 5%);
+  color: var(--ink-2);
+}
+body.halloween-theme .testimonial-card blockquote,
+body.halloween-theme .review-chip { color: var(--ink-2); }
+body.halloween-theme .testimonial-card .stars,
+body.halloween-theme .review-chip .stars,
+body.halloween-theme .proof-stars { color: #ffb15e; }
+body.halloween-theme .review-chip b { color: var(--ink); }
+body.halloween-theme .contact-note,
+body.halloween-theme .faq-item[open] { background: rgb(255 255 255 / 5%); }
+body.halloween-theme .contact-form input:not([type="checkbox"]),
+body.halloween-theme .contact-form select,
+body.halloween-theme .contact-form textarea {
+  border-color: var(--line-strong);
+  background-color: #17121b;
+  color: var(--ink);
+}
+body.halloween-theme .contact-form input::placeholder,
+body.halloween-theme .contact-form textarea::placeholder { color: #988996; }
+body.halloween-theme .detail-body li,
+body.halloween-theme .qr-price-card li,
+body.halloween-theme .testimonial-card blockquote,
+body.halloween-theme .glass-card__review { color: var(--ink-2); }
+body.halloween-theme .intro-band,
+body.halloween-theme .work-feature,
+body.halloween-theme .newsletter-band,
+body.halloween-theme .contact-strip,
+body.halloween-theme .site-footer {
+  color: var(--ink);
+}
+body.halloween-theme .intro-band { background: linear-gradient(115deg, #1d1421, #2d1b29); }
+body.halloween-theme .work-feature { background: #1a111d; }
+body.halloween-theme .newsletter-band {
+  background-image: linear-gradient(135deg, #25172b, #432838);
+}
+body.halloween-theme .intro-band .eyebrow,
+body.halloween-theme .work-feature .eyebrow { color: #c2aebb; }
+body.halloween-theme .newsletter-band p { color: #c8b9c5; }
+body.halloween-theme .site-footer { background: #0b090e; }
+body.halloween-theme .contact-strip { background: linear-gradient(120deg, #291a2d, #482438 65%, #27171e); }
+body.halloween-theme .stats-band,
+body.halloween-theme .values-section { background: var(--paper-2); }
+body.halloween-theme .marquee,
+body.halloween-theme .review-marquee { background: rgb(25 19 29 / 88%); }
+body.halloween-theme .scroll-progress { background: linear-gradient(90deg, #e56b35, #ffb257, #9b65a3); }
+body.halloween-theme .custom-cursor,
+body.halloween-theme .custom-cursor-outline { border-color: #ff9b50; }
+body.halloween-theme .custom-cursor { background: #ff9b50; }
+
+@media (prefers-reduced-motion: reduce) {
+  body.halloween-theme .hero::after { animation: none; }
+}
   </style>
 </head>
-<body>
+<body class="halloween-theme">
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
   <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
@@ -4464,7 +4666,7 @@ a[href^="mailto:"] {
       let rafId = null;
       let isRunning = true;
 
-      const COLORS = ["rgba(212,240,106,", "rgba(224,122,82,", "rgba(22,32,26,", "rgba(169,201,72,"];
+      const COLORS = ["rgba(255,155,80,", "rgba(224,122,82,", "rgba(245,216,199,", "rgba(157,101,163,"];
       const COUNT_BASE = window.innerWidth < 720 ? 22 : 46;
 
       function resize() {
@@ -4508,7 +4710,7 @@ a[href^="mailto:"] {
             const dx = p.x - q.x, dy = p.y - q.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
             if (dist < 110) {
-              ctx.strokeStyle = `rgba(22,32,26,${(1 - dist / 110) * 0.08})`;
+              ctx.strokeStyle = `rgba(245,216,230,${(1 - dist / 110) * 0.08})`;
               ctx.lineWidth = 0.6;
               ctx.beginPath();
               ctx.moveTo(p.x, p.y);
