@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billy The GridGRX — Portfolio</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%0A%20%20%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%2316201a%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M14%2014h16v16H14zM34%2014h16v16H34zM14%2034h16v16H14z%22%20fill%3D%22%23d4f06a%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M34%2034h16v16H34z%22%20fill%3D%22none%22%20stroke%3D%22%23d4f06a%22%20stroke-width%3D%223%22%2F%3E%0A%3C%2Fsvg%3E%0A" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://db.onlinewebfonts.com/c/d08bafd725a4cfc309efb5a88e0b63a5?family=basis33" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            corePlugins: { preflight: false },
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], pixel: ['basis33', 'monospace'] },
+                    colors: { brand: { bg: '#050505', surface: 'rgba(255, 255, 255, 0.03)', border: 'rgba(255, 255, 255, 0.08)', accent: '#a3a3ff' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { margin: 0; padding: 0; background: #050505; color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; -webkit-font-smoothing: antialiased; }
+        .font-pixel { font-family: 'basis33', monospace !important; letter-spacing: 0.05em; }
+        .ease-spring { transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.3); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(163, 163, 255, 0.5); }
+        .glass-panel { background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glass-card { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .glass-card:hover { background: rgba(255, 255, 255, 0.04); border-color: rgba(163, 163, 255, 0.3); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5), 0 0 20px rgba(163,163,255,0.1); }
+        .tilt-card { transform-style: preserve-3d; transition: transform 0.4s ease, box-shadow 0.4s ease; }
+        .tilt-card:hover { transform: translateY(-8px) rotateX(4deg) rotateY(-4deg) scale(1.02); z-index: 20; box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(163, 163, 255, 0.15); }
+        .text-gradient-white { background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.6) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .video-fallback { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #111 0%, #050505 100%); border: 1px dashed rgba(255, 255, 255, 0.1); cursor: pointer; }
+        .video-fallback-icon { width: 50px; height: 50px; border-radius: 50%; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.4s ease; }
+        .video-fallback:hover .video-fallback-icon { background: rgba(163, 163, 255, 0.15); border-color: rgba(163, 163, 255, 0.4); transform: scale(1.1); box-shadow: 0 0 20px rgba(163, 163, 255, 0.3); }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const ALL_PORTFOLIO_FILES = ["de.png","IMG_4057.JPG","IMG_4062.JPG","IMG_4072.JPG","IMG_4080.JPG","IMG_4081.JPG","1.PNG","2.PNG","3.PNG","4.PNG","5.MOV","6.MOV","7.MOV","8.JPG","9.JPG","10.PNG","11.PNG","12.PNG","13.PNG","14.JPG","35.JPG","24.jpg","25.jpg","26.JPG","15.JPG","16.MP4","17.JPG","18.PNG","19.jpg","20.png","21.jpg","22.jpg","23.jpg","44.PNG","39.MP4","38.JPG","37.JPG","36.JPG","33.JPG","34.mov","28.mov","27.JPG","43.MOV","42.MOV","41.MOV","40.MOV","32.JPG","31.JPG","30.JPG","29.JPG"];
+        const FILTER_OPTIONS = [{ id: 'all', label: 'TODOS' },{ id: 'image', label: 'IMÁGENES' },{ id: 'video', label: 'VIDEOS' }];
+        const NAV_LINKS = ['SOBRE MÍ', 'PROCESO', 'PROYECTOS', 'CATÁLOGO', 'D.O.T', 'CONTACTO'];
+        const isVideoFile = (filename) => { if (!filename) return false; const ext = filename.split('.').pop().toLowerCase(); return ext === 'mp4' || ext === 'mov' || ext === 'webm'; };
+        const formatIndex = (num) => String(num).padStart(2, '0');
+        const Icon = ({ name, size = 24, className = "" }) => {
+            const IconRef = useRef(null);
+            useEffect(() => { if (IconRef.current) { IconRef.current.innerHTML = '<i data-lucide="' + name + '" style="width: ' + size + 'px; height: ' + size + 'px;" class="' + className + '"></i>'; if (window.lucide) window.lucide.createIcons(); } }, [name, size, className]);
+            return <span ref={IconRef} className="inline-flex items-center justify-center" />;
+        };
+const Logo = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 64 64" fill="none">
+        <rect width="64" height="64" rx="14" fill="transparent" />
+        <path d="M14 14h16v16H14zM34 14h16v16H34zM14 34h16v16H14z" fill="#a3a3ff" />
+        <path d="M34 34h16v16H34z" fill="none" stroke="#a3a3ff" strokeWidth="3" />
+    </svg>
+);        const SafeMedia = ({ file }) => {
+            const [hasError, setHasError] = useState(false);
+            const isVideo = isVideoFile(file);
+            const isMP4 = file.toLowerCase().endsWith('.mp4');
+            if (hasError || (isVideo && !isMP4)) {
+                return (<div className="video-fallback group" onClick={() => window.open('./' + file, '_blank')}><div className="video-fallback-icon"><Icon name="play" size={20} className="text-white/70 ml-1" /></div><span className="text-[10px] text-white/30 mt-4 font-pixel tracking-widest uppercase">Abrir Video</span></div>);
+            }
+            if (isVideo && isMP4) return <video src={'./' + file} autoPlay loop muted playsInline className="w-full h-full object-cover" onError={() => setHasError(true)} />;
+            return <img src={'./' + file} alt="Portfolio" loading="lazy" className="w-full h-full object-cover" onError={() => setHasError(true)} />;
+        };
+        function App() {
+            const [menuOpen, setMenuOpen] = useState(false);
+            const [galleryOpen, setGalleryOpen] = useState(false);
+            const [contactOpen, setContactOpen] = useState(false);
+            const [activeFilter, setActiveFilter] = useState('all');
+            const [searchTerm, setSearchTerm] = useState('');
+            useEffect(() => { if (window.lucide) window.lucide.createIcons(); }, [galleryOpen, contactOpen, menuOpen]);
+            const filteredFiles = ALL_PORTFOLIO_FILES.filter(file => { const isVid = isVideoFile(file); const matchesFilter = activeFilter === 'all' ? true : activeFilter === 'video' ? isVid : !isVid; const matchesSearch = file.toLowerCase().includes(searchTerm.toLowerCase()); return matchesFilter && matchesSearch; });
+            return (
+                <div className="relative h-screen w-full overflow-hidden bg-black text-white selection:bg-[#a3a3ff] selection:text-black">
+                    <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover lg:scale-[1.15] opacity-60 filter contrast-125 saturate-50" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260725_114042_d2ed2a89-f2fa-449b-9609-da456344257b.mp4" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/80"></div>
+                    <div className="relative z-10 flex flex-col h-full px-4 sm:px-6 md:px-10 lg:px-14">
+                        <nav className="flex items-center justify-between py-5 mt-4 px-6 rounded-2xl glass-panel">
+                            <div className="cursor-pointer text-white hover:text-[#a3a3ff]" onClick={() => window.parent.closePortfolio()}><Logo /></div>
+                            <button onClick={() => window.parent.closePortfolio()} className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-sm font-semibold text-white">← Volver a la web</button>
+                            <div className="hidden lg:flex items-center gap-8">
+                                {NAV_LINKS.map((link) => (<a key={link} href="#" onClick={(e) => { e.preventDefault(); if(link==='PROYECTOS'||link==='CATÁLOGO') setGalleryOpen(true); if(link==='CONTACTO') setContactOpen(true); }} className={'relative group font-pixel text-lg tracking-widest uppercase transition-colors ' + (link === 'CONTACTO' ? 'text-[#a3a3ff]' : 'text-white/80 hover:text-white')}>{link}</a>))}
+                            </div>
+                            <button className="lg:hidden p-2 text-white/80" onClick={() => setMenuOpen(true)}><Icon name="menu" size={28} /></button>
+                        </nav>
+                        <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 px-2">
+                            <div className="flex flex-col"><h2 className="text-xl leading-tight"><span className="font-normal block text-white/70">BILLY</span><span className="font-pixel text-3xl block mt-1 text-white">THE GRIDGRX</span></h2><div className="text-[10px] text-[#a3a3ff] mt-4 mb-2">*</div><div className="font-pixel text-sm text-white/50 leading-relaxed whitespace-pre-line">{'Grilled Pixels es mi\nmarca personal - la creé\nen 2004 basándome en\n"cocinando ideas"'}</div></div>
+                            <div className="text-right lg:text-left flex flex-col"><h2 className="text-xl leading-tight"><span className="font-normal block text-white/70">DISEÑO Y</span><span className="font-pixel text-3xl block mt-1 text-white">INGENIERÍA</span></h2></div>
+                            <div className="flex flex-col"><h3 className="font-pixel text-sm tracking-widest text-white/40 uppercase mb-3">QUÉ HAGO</h3><p className="text-sm text-white/80 leading-relaxed max-w-[220px]">Creo el top 1% de las experiencias para marcas y productos digitales.</p></div>
+                            <div className="text-right lg:text-left flex flex-col"><h3 className="font-pixel text-sm tracking-widest text-white/40 uppercase mb-3">SERVICIOS</h3><ul className="text-sm text-white/80 space-y-1"><li>Branding</li><li>Dirección Creativa</li><li>Diseño UX/UI</li><li>Desarrollo Web</li><li>3D, WebGL / Fotografía</li><li>Video y Animación</li></ul></div>
+                        </div>
+                        <div className="flex-1" />
+                        <div className="pb-6 px-2">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-end">
+                                <div><h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem] uppercase font-normal text-white" style={{ lineHeight: 0.75 }}>TRAIGO LO<br /><span className="font-pixel text-[1.25em] inline-block text-gradient-white">INESPERADO</span> A<br />MARCAS Y DIGITAL<br /><span className="font-pixel text-[1.25em] inline-block text-[#a3a3ff]">EXPERIENCIAS</span></h1></div>
+                                <div className="flex flex-col gap-6 justify-end">
+                                    <button onClick={() => setGalleryOpen(true)} className="group flex items-center gap-4 border border-white/20 px-8 py-4 rounded-xl glass-card hover:bg-white/10 self-start text-white"><div className="w-8 h-8 rounded-full bg-[#a3a3ff]/20 flex items-center justify-center"><Icon name="play" size={14} className="text-[#a3a3ff] ml-0.5" /></div><span className="text-sm tracking-widest font-medium font-pixel">REPRODUCIR SHOWREEL</span></button>
+                                    <div className="flex flex-wrap gap-3 self-start lg:self-end">
+                                        <div className="bg-black/40 border border-white/10 px-4 py-2 rounded-lg flex gap-2"><span className="font-bold text-white">FWA</span><span className="text-white/40 text-xs">x1</span></div>
+                                        <div className="bg-black/40 border border-white/10 px-4 py-2 rounded-lg flex gap-2"><span className="font-bold text-white">W.</span><span className="text-white/40 text-xs">x7</span></div>
+                                        <div className="bg-black/40 border border-white/10 px-4 py-2 rounded-lg flex gap-2"><span className="font-bold text-white">CSSDesignAwards</span><span className="text-white/40 text-xs">x22</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={'fixed inset-0 z-[100] flex flex-col transition-all duration-700 ' + (galleryOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-12')}>
+                        <div className="absolute inset-0 bg-black/80 backdrop-blur-2xl" onClick={() => setGalleryOpen(false)}></div>
+                        <div className="relative z-10 flex flex-col h-full w-full max-w-[1600px] mx-auto px-4 py-6">
+                            <div className="flex justify-between items-center pb-6 border-b border-white/10">
+                                <div><h2 className="text-2xl font-pixel text-white">EL ARCHIVO</h2><p className="text-xs text-white/40 mt-2">Mostrando {filteredFiles.length} de {ALL_PORTFOLIO_FILES.length}</p></div>
+                                <div className="flex gap-4">
+                                    <div className="flex bg-white/5 rounded-full p-1 border border-white/10">{FILTER_OPTIONS.map(opt => (<button key={opt.id} onClick={() => setActiveFilter(opt.id)} className={'px-4 py-1.5 rounded-full text-[10px] font-bold ' + (activeFilter === opt.id ? 'bg-[#a3a3ff] text-black' : 'text-white/60')}>{opt.label}</button>))}</div>
+                                    <button onClick={() => setGalleryOpen(false)} className="p-2 rounded-full bg-white/5 text-white"><Icon name="x" size={20} /></button>
+                                </div>
+                            </div>
+                            <div className="flex-1 overflow-y-auto custom-scrollbar py-8">
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                                    {filteredFiles.map((file, index) => (<div key={index} className="tilt-card relative bg-[#0a0a0a] border border-white/5 rounded-2xl overflow-hidden"><div className="relative aspect-[4/5] bg-[#111]"><SafeMedia file={file} /></div><div className="p-4"><span className="text-[10px] text-white/60 font-pixel">PROYECTO {formatIndex(index + 1)}</span></div></div>))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
