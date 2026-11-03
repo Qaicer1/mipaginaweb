@@ -20,7 +20,7 @@
         }
     </script>
     <style>
-body { margin: 0; padding: 0; background: #050505; color: #fff; font-family: 'Inter', sans-serif; overflow-y: auto; overflow-x: hidden; -webkit-font-smoothing: antialiased; -webkit-overflow-scrolling: touch; }
+        body { margin: 0; padding: 0; background: #050505; color: #fff; font-family: 'Inter', sans-serif; overflow: hidden; -webkit-font-smoothing: antialiased; }
         .font-pixel { font-family: 'basis33', monospace !important; letter-spacing: 0.05em; }
         .ease-spring { transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
@@ -80,8 +80,8 @@ const Logo = () => (
             const [searchTerm, setSearchTerm] = useState('');
             useEffect(() => { if (window.lucide) window.lucide.createIcons(); }, [galleryOpen, contactOpen, menuOpen]);
             const filteredFiles = ALL_PORTFOLIO_FILES.filter(file => { const isVid = isVideoFile(file); const matchesFilter = activeFilter === 'all' ? true : activeFilter === 'video' ? isVid : !isVid; const matchesSearch = file.toLowerCase().includes(searchTerm.toLowerCase()); return matchesFilter && matchesSearch; });
-           return (
-  <div className="relative min-h-screen w-full overflow-visible bg-black text-white selection:bg-[#a3a3ff] selection:text-black">
+            return (
+                <div className="relative h-screen w-full overflow-hidden bg-black text-white selection:bg-[#a3a3ff] selection:text-black">
                     <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover lg:scale-[1.15] opacity-60 filter contrast-125 saturate-50" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260725_114042_d2ed2a89-f2fa-449b-9609-da456344257b.mp4" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/80"></div>
                     <div className="relative z-10 flex flex-col h-full px-4 sm:px-6 md:px-10 lg:px-14">
